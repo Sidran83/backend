@@ -2,7 +2,24 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 
+//validation du mot de passe
+const passwordValidator = require('password-validator');
+
+const passwordSchema = new passwordValidator();
+passwordSchema
+  .is().min(8)
+  .is().max(50)
+  .has().uppercase()
+  .has().lowercase()
+  .has().digits()
+  .has().not().spaces();
+
 exports.signup = (req, res, next) => {
+
+  if (!passwordSchema.validate(req.body.password)){
+    return res.status(400).json({ message: 'Le mot de passe doit contenir au moins 8 lettres avec au minimum un chiffre, une majuscule et une minuscule, et ne doit pas contenir d\nespace !' });
+  }
+
   bcrypt.hash(req.body.password, 10)
     .then(hash => {
       const user = new User({
