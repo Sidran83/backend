@@ -8,6 +8,10 @@ const path = require('path');
 // importer dotenv pour cacher les infos DB
 require('dotenv').config({ path: './.env' })
 
+// sécuriser les headers http + CORS pkg pour gérer affichage d'images
+const helmet = require("helmet");
+const cors = require('cors');
+
 // importation des routers
 const sauceRoutes = require('./routes/sauce');
 const userRoutes = require('./routes/user');
@@ -36,6 +40,10 @@ app.use(mongoSanitize());
 
 // appel du middleware pour servir les images
 app.use('/images', express.static(path.join(__dirname, 'images')));
+
+// appel de helmet pour protéger headers + CORS pkg
+app.use(helmet());
+app.use(cors());
 
 // appel des routes pour modèles
 app.use('/api/sauces', sauceRoutes);
