@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 // importation du controller
-const saucesCtrl = require('../controllers/sauces');
+const saucesCtrl = require('../controllers/sauce');
 
 router.post('/', saucesCtrl.createSauce);
 router.get('/', saucesCtrl.getAllSauces);

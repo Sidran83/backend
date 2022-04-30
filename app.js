@@ -1,8 +1,9 @@
 const express = require('express');
 const mongoose = require('mongoose');
 
-// importation du router
-const saucesRoutes = require('./routes/sauces');
+// importation des routers
+const sauceRoutes = require('./routes/sauce');
+const userRoutes = require('./routes/user');
 
 mongoose.connect('mongodb+srv://pierredeveix:panoramata@sidran83.5hbgs.mongodb.net/piiquante?retryWrites=true&w=majority',
   { useNewUrlParser: true,
@@ -24,6 +25,7 @@ app.use((req, res, next) => {
 });
 
 // appel des routes pour me modèle Sauce (url de test pour POSTMAN)
-app.use('/api/stuff', saucesRoutes);
+app.use('/api/stuff', sauceRoutes);
+app.use('/api/auth', userRoutes);
 
 module.exports = app;
