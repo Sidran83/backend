@@ -1,6 +1,9 @@
 const express = require('express');
 const mongoose = require('mongoose');
 
+// importation de path pour retrouver le path des fichiers images
+const path = require('path');
+
 // importation des routers
 const sauceRoutes = require('./routes/sauce');
 const userRoutes = require('./routes/user');
@@ -24,7 +27,10 @@ app.use((req, res, next) => {
   next();
 });
 
-// appel des routes pour me modèle Sauce (url de test pour POSTMAN)
+// appel du middleware pour servir les images
+app.use('/images', express.static(path.join(__dirname, 'images')));
+
+// appel des routes pour modèles
 app.use('/api/sauces', sauceRoutes);
 app.use('/api/auth', userRoutes);
 
