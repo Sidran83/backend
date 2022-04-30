@@ -25,7 +25,7 @@ app.use((req, res, next) => {
 });
 
 // appel des routes pour me modèle Sauce (url de test pour POSTMAN)
-app.use('/api/stuff', sauceRoutes);
+app.use('/api/sauces', sauceRoutes);
 app.use('/api/auth', userRoutes);
 
 module.exports = app;
