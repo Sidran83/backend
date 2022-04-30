@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const mongoSanitize = require('express-mongo-sanitize');
 
 // importation de path pour retrouver le path des fichiers images
 const path = require('path');
@@ -29,6 +30,9 @@ app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
   next();
 });
+
+// appel du middleware pour éviter injections
+app.use(mongoSanitize());
 
 // appel du middleware pour servir les images
 app.use('/images', express.static(path.join(__dirname, 'images')));
