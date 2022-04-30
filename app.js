@@ -6,7 +6,6 @@ const path = require('path');
 
 // importer dotenv pour cacher les infos DB
 require('dotenv').config({ path: './.env' })
-console.log(process.env)
 
 // importation des routers
 const sauceRoutes = require('./routes/sauce');
