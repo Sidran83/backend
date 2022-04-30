@@ -2,8 +2,9 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 
-//validation du mot de passe
+//validation du mot de passe et de l'email
 const passwordValidator = require('password-validator');
+const emailValidator = require('email-validator');
 
 const passwordSchema = new passwordValidator();
 passwordSchema
@@ -17,7 +18,11 @@ passwordSchema
 exports.signup = (req, res, next) => {
 
   if (!passwordSchema.validate(req.body.password)){
-    return res.status(400).json({ message: 'Le mot de passe doit contenir au moins 8 lettres avec au minimum un chiffre, une majuscule et une minuscule, et ne doit pas contenir d\nespace !' });
+    return res.status(400).json({ message: "Le mot de passe doit contenir au moins 8 lettres avec au minimum un chiffre, une majuscule et une minuscule, et ne doit pas contenir d'espace !" });
+  }
+
+  if (!emailValidator.validate(req.body.email)){
+    return res.status(400).json({ message: "Le format de l'email est invalide !" });
   }
 
   bcrypt.hash(req.body.password, 10)
