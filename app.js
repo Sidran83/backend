@@ -4,11 +4,15 @@ const mongoose = require('mongoose');
 // importation de path pour retrouver le path des fichiers images
 const path = require('path');
 
+// importer dotenv pour cacher les infos DB
+require('dotenv').config({ path: './.env' })
+console.log(process.env)
+
 // importation des routers
 const sauceRoutes = require('./routes/sauce');
 const userRoutes = require('./routes/user');
 
-mongoose.connect('mongodb+srv://pierredeveix:panoramata@sidran83.5hbgs.mongodb.net/piiquante?retryWrites=true&w=majority',
+mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_HOST_NAME}.5hbgs.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`,
   { useNewUrlParser: true,
     useUnifiedTopology: true })
   .then(() => console.log('Connexion à MongoDB réussie !'))
